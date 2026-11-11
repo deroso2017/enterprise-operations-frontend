@@ -1,4 +1,9 @@
-<main class="app-shell">
-  <ngx-sonner-toaster position="bottom-right" [richColors]="true" />
+<ngx-sonner-toaster position="bottom-right" [richColors]="true" />
+
+@if (auth.isAuthenticated()) {
+  <app-navbar />
+}
+
+<main>
   <router-outlet />
 </main>
