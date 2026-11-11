@@ -1,6 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { Observable, catchError, map, of, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  filter,
+  map,
+  of,
+  switchMap,
+  take,
+  tap,
+  throwError,
+} from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { RefreshResponse, RegisterRequest, TokenResponse, User } from '../models/auth.model';
 
@@ -16,6 +27,9 @@ export class AuthService {
 
   readonly currentUser = this.userState.asReadonly();
   readonly isAuthenticated = computed(() => this.userState() !== null);
+
+  private refreshTokenInProgress = false;
+  private refreshTokenSubject = new BehaviorSubject<string | null>(null);
 
   get accessToken(): string | null {
     return sessionStorage.getItem(this.accessTokenKey);
@@ -44,16 +58,35 @@ export class AuthService {
   }
 
   refreshAccessToken(): Observable<RefreshResponse> {
-    const refresh = this.refreshToken;
+    if (this.refreshTokenInProgress) {
+      // If a refresh is already happening, wait for it to complete
+      return this.refreshTokenSubject.pipe(
+        filter((token): token is string => token !== null),
+        take(1),
+        switchMap(() => of({ access: this.accessToken!, refresh: this.refreshToken! })),
+      );
+    }
 
+    this.refreshTokenInProgress = true;
+    this.refreshTokenSubject.next(null);
+
+    const refresh = this.refreshToken;
     if (!refresh) {
       this.clearSession();
-      throw new Error('No refresh token is available.');
+      return throwError(() => new Error('No refresh token available.'));
     }
 
     return this.http.post<RefreshResponse>(`${this.baseUrl}/refresh/`, { refresh }).pipe(
       tap((response) => {
         this.saveTokens(response.access, response.refresh ?? refresh);
+        this.refreshTokenInProgress = false;
+        this.refreshTokenSubject.next(response.access);
+      }),
+      catchError((err) => {
+        this.refreshTokenInProgress = false;
+        this.refreshTokenSubject.next(null);
+        this.clearSession();
+        return throwError(() => err);
       }),
     );
   }
