@@ -32,6 +32,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'orders',
+    loadChildren: () =>
+      import('./features/orders/orders.routes').then((module) => module.ORDERS_ROUTES),
+    canActivate: [authGuard],
+  },
+  {
     path: 'admin',
     component: Dashboard,
     canActivate: [roleGuard],
