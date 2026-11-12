@@ -1,16 +1,10 @@
-
 <div class="mx-auto max-w-7xl space-y-8 px-4 py-8 sm:px-6 lg:px-8">
-
   <!-- Page header -->
   <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
     <div>
-      <p class="text-sm font-medium text-indigo-600">
-        Operations / Inventory
-      </p>
-      <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-900">
-        Inventory Management
-      </h1>
-      <p class="mt-2 text-sm text-slate-500">
+      <p class="text-sm font-medium text-primary">Operations / Inventory</p>
+      <h1 class="mt-2 text-3xl font-bold tracking-tight text-foreground">Inventory Management</h1>
+      <p class="mt-2 text-sm text-foreground/70">
         Manage products, warehouses and stock movements.
       </p>
     </div>
@@ -18,9 +12,8 @@
     <button
       type="button"
       (click)="loadDashboard()"
-      class="rounded-lg border border-slate-300 bg-white px-4 py-2.5
-             text-sm font-semibold text-slate-700 shadow-sm
-             hover:bg-slate-50">
+      class="rounded-lg border border-primary/30 bg-surface px-4 py-2.5 text-sm font-semibold text-foreground shadow-sm hover:bg-primary/10 transition-colors"
+    >
       Refresh data
     </button>
   </div>
@@ -28,51 +21,50 @@
   <!-- Dashboard cards -->
   @if (summary; as data) {
     <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-
-      <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-        <p class="text-sm font-medium text-slate-500">Active products</p>
-        <p class="mt-3 text-3xl font-bold text-slate-900">
+      <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
+        <p class="text-sm font-medium text-foreground/70">Active products</p>
+        <p class="mt-3 text-3xl font-bold text-foreground">
           {{ data.total_products }}
         </p>
-        <p class="mt-2 text-xs text-slate-400">Products in catalog</p>
+        <p class="mt-2 text-xs text-foreground/50">Products in catalog</p>
       </div>
 
-      <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-        <p class="text-sm font-medium text-slate-500">Warehouses</p>
-        <p class="mt-3 text-3xl font-bold text-slate-900">
+      <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
+        <p class="text-sm font-medium text-foreground/70">Warehouses</p>
+        <p class="mt-3 text-3xl font-bold text-foreground">
           {{ data.total_warehouses }}
         </p>
-        <p class="mt-2 text-xs text-slate-400">Active storage locations</p>
+        <p class="mt-2 text-xs text-foreground/50">Active storage locations</p>
       </div>
 
-      <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-        <p class="text-sm font-medium text-slate-500">Total units</p>
-        <p class="mt-3 text-3xl font-bold text-slate-900">
+      <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
+        <p class="text-sm font-medium text-foreground/70">Total units</p>
+        <p class="mt-3 text-3xl font-bold text-foreground">
           {{ data.total_units }}
         </p>
-        <p class="mt-2 text-xs text-slate-400">Across active warehouses</p>
+        <p class="mt-2 text-xs text-foreground/50">Across active warehouses</p>
       </div>
 
-      <div class="rounded-xl border border-amber-200 bg-amber-50 p-5 shadow-sm">
-        <p class="text-sm font-medium text-amber-700">Low-stock items</p>
-        <p class="mt-3 text-3xl font-bold text-amber-900">
+      <div class="rounded-xl border border-amber-500/40 bg-amber-500/10 p-5 shadow-sm">
+        <p class="text-sm font-medium text-amber-600 dark:text-amber-400">Low-stock items</p>
+        <p class="mt-3 text-3xl font-bold text-amber-700 dark:text-amber-300">
           {{ data.low_stock_items }}
         </p>
-        <p class="mt-2 text-xs text-amber-700">At or below reorder level</p>
+        <p class="mt-2 text-xs text-amber-600/80 dark:text-amber-400/80">
+          At or below reorder level
+        </p>
       </div>
-
     </section>
   }
 
   <!-- Product catalog -->
-  <section class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-    <div class="flex flex-col justify-between gap-4 border-b border-slate-200
-                p-5 sm:flex-row sm:items-center">
+  <section class="overflow-hidden rounded-xl border border-primary/20 bg-surface shadow-sm">
+    <div
+      class="flex flex-col justify-between gap-4 border-b border-primary/10 p-5 sm:flex-row sm:items-center"
+    >
       <div>
-        <h2 class="text-lg font-semibold text-slate-900">Product catalog</h2>
-        <p class="mt-1 text-sm text-slate-500">
-          Search and manage inventory products.
-        </p>
+        <h2 class="text-lg font-semibold text-foreground">Product catalog</h2>
+        <p class="mt-1 text-sm text-foreground/70">Search and manage inventory products.</p>
       </div>
 
       <div class="flex gap-2">
@@ -82,23 +74,22 @@
           (input)="searchTerm = $any($event.target).value"
           (keyup.enter)="searchProducts()"
           placeholder="Search name or SKU"
-          class="w-full rounded-lg border border-slate-300 px-3 py-2
-                 text-sm outline-none focus:border-indigo-500
-                 focus:ring-2 focus:ring-indigo-100 sm:w-64">
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 sm:w-64 placeholder:text-foreground/40"
+        />
 
         <button
           type="button"
           (click)="searchProducts()"
-          class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold
-                 text-white hover:bg-indigo-700">
+          class="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
+        >
           Search
         </button>
       </div>
     </div>
 
     <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-slate-200 text-sm">
-        <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
+      <table class="min-w-full divide-y divide-primary/10 text-sm">
+        <thead class="bg-primary/5 text-left text-xs uppercase tracking-wide text-foreground/70">
           <tr>
             <th class="px-5 py-3">SKU</th>
             <th class="px-5 py-3">Product</th>
@@ -109,40 +100,43 @@
           </tr>
         </thead>
 
-        <tbody class="divide-y divide-slate-100">
+        <tbody class="divide-y divide-primary/10">
           @for (product of products; track product.id) {
-            <tr class="hover:bg-slate-50">
-              <td class="whitespace-nowrap px-5 py-4 font-medium text-slate-700">
+            <tr class="hover:bg-primary/5 transition-colors">
+              <td class="whitespace-nowrap px-5 py-4 font-medium text-foreground/80">
                 {{ product.sku }}
               </td>
               <td class="px-5 py-4">
-                <p class="font-semibold text-slate-900">{{ product.name }}</p>
-                <p class="mt-1 text-xs text-slate-500">
+                <p class="font-semibold text-foreground">{{ product.name }}</p>
+                <p class="mt-1 text-xs text-foreground/60">
                   {{ product.description || 'No description' }}
                 </p>
               </td>
-              <td class="px-5 py-4 text-slate-600">
+              <td class="px-5 py-4 text-foreground/70">
                 {{ product.category_name }}
               </td>
-              <td class="whitespace-nowrap px-5 py-4 text-right text-slate-700">
-                {{ product.unit_price | currency:'EUR' }}
+              <td class="whitespace-nowrap px-5 py-4 text-right text-foreground/80">
+                {{ product.unit_price | currency: 'EUR' }}
               </td>
-              <td class="px-5 py-4 text-right text-slate-700">
+              <td class="px-5 py-4 text-right text-foreground/80">
                 {{ product.reorder_level }}
               </td>
               <td class="px-5 py-4">
                 <span
                   class="rounded-full px-2.5 py-1 text-xs font-medium"
-                  [ngClass]="product.is_active
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-slate-100 text-slate-600'">
+                  [ngClass]="
+                    product.is_active
+                      ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                      : 'bg-foreground/10 text-foreground/60'
+                  "
+                >
                   {{ product.is_active ? 'Active' : 'Inactive' }}
                 </span>
               </td>
             </tr>
           } @empty {
             <tr>
-              <td colspan="6" class="px-5 py-10 text-center text-slate-500">
+              <td colspan="6" class="px-5 py-10 text-center text-foreground/60">
                 No products found.
               </td>
             </tr>
@@ -153,63 +147,84 @@
   </section>
 
   <!-- Product creation -->
-  <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-    <h2 class="text-lg font-semibold text-slate-900">Create product</h2>
-    <p class="mt-1 text-sm text-slate-500">
-      Add a new product to the catalog.
-    </p>
+  <section class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
+    <h2 class="text-lg font-semibold text-foreground">Create product</h2>
+    <p class="mt-1 text-sm text-foreground/70">Add a new product to the catalog.</p>
 
-    <form [formGroup]="productForm" (ngSubmit)="createProduct()"
-          class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-
+    <form
+      [formGroup]="productForm"
+      (ngSubmit)="createProduct()"
+      class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+    >
       <div>
-        <label class="mb-1 block text-sm font-medium text-slate-700">SKU</label>
-        <input formControlName="sku" placeholder="LAP-001"
-               class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm
-                      focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100">
+        <label class="mb-1 block text-sm font-medium text-foreground/80">SKU</label>
+        <input
+          formControlName="sku"
+          placeholder="LAP-001"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 placeholder:text-foreground/40"
+        />
       </div>
 
       <div>
-        <label class="mb-1 block text-sm font-medium text-slate-700">Product name</label>
-        <input formControlName="name" placeholder="Business Laptop"
-               class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm
-                      focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100">
+        <label class="mb-1 block text-sm font-medium text-foreground/80">Product name</label>
+        <input
+          formControlName="name"
+          placeholder="Business Laptop"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 placeholder:text-foreground/40"
+        />
       </div>
 
       <div>
-        <label class="mb-1 block text-sm font-medium text-slate-700">Category</label>
-        <select formControlName="category"
-                class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm">
-          <option [ngValue]="0">Select category</option>
+        <label class="mb-1 block text-sm font-medium text-foreground/80">Category</label>
+        <select
+          formControlName="category"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
+        >
+          <option [ngValue]="0" class="bg-surface text-foreground">Select category</option>
           @for (category of categories; track category.id) {
-            <option [ngValue]="category.id">{{ category.name }}</option>
+            <option [ngValue]="category.id" class="bg-surface text-foreground">
+              {{ category.name }}
+            </option>
           }
         </select>
       </div>
 
       <div>
-        <label class="mb-1 block text-sm font-medium text-slate-700">Unit price (€)</label>
-        <input type="number" min="0" step="0.01" formControlName="unit_price"
-               class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
+        <label class="mb-1 block text-sm font-medium text-foreground/80">Unit price (€)</label>
+        <input
+          type="number"
+          min="0"
+          step="0.01"
+          formControlName="unit_price"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
+        />
       </div>
 
       <div>
-        <label class="mb-1 block text-sm font-medium text-slate-700">Reorder level</label>
-        <input type="number" min="0" formControlName="reorder_level"
-               class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
+        <label class="mb-1 block text-sm font-medium text-foreground/80">Reorder level</label>
+        <input
+          type="number"
+          min="0"
+          formControlName="reorder_level"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
+        />
       </div>
 
       <div>
-        <label class="mb-1 block text-sm font-medium text-slate-700">Description</label>
-        <input formControlName="description" placeholder="Product description"
-               class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
+        <label class="mb-1 block text-sm font-medium text-foreground/80">Description</label>
+        <input
+          formControlName="description"
+          placeholder="Product description"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none placeholder:text-foreground/40"
+        />
       </div>
 
       <div class="sm:col-span-2 lg:col-span-3">
-        <button type="submit" [disabled]="submitting"
-                class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold
-                       text-white hover:bg-indigo-700 disabled:cursor-not-allowed
-                       disabled:opacity-50">
+        <button
+          type="submit"
+          [disabled]="submitting"
+          class="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
+        >
           {{ submitting ? 'Saving...' : 'Create product' }}
         </button>
       </div>
@@ -218,96 +233,106 @@
 
   <!-- Category and warehouse management -->
   <section class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+    <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
+      <h2 class="text-lg font-semibold text-foreground">Create category</h2>
 
-    <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 class="text-lg font-semibold text-slate-900">Create category</h2>
+      <form [formGroup]="categoryForm" (ngSubmit)="createCategory()" class="mt-4 space-y-3">
+        <input
+          formControlName="name"
+          placeholder="Category name"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none placeholder:text-foreground/40"
+        />
 
-      <form [formGroup]="categoryForm" (ngSubmit)="createCategory()"
-            class="mt-4 space-y-3">
-
-        <input formControlName="name" placeholder="Category name"
-               class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
-
-        <textarea formControlName="description" rows="2"
-                  placeholder="Description"
-                  class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
+        <textarea
+          formControlName="description"
+          rows="2"
+          placeholder="Description"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none placeholder:text-foreground/40"
+        >
         </textarea>
 
-        <button type="submit"
-                class="rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white">
+        <button
+          type="submit"
+          class="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
+        >
           Create category
         </button>
       </form>
 
-      <div class="mt-5 border-t border-slate-100 pt-4">
-        <h3 class="mb-3 text-sm font-semibold text-slate-700">Categories</h3>
+      <div class="mt-5 border-t border-primary/10 pt-4">
+        <h3 class="mb-3 text-sm font-semibold text-foreground/80">Categories</h3>
         @for (category of categories; track category.id) {
-          <div class="border-b border-slate-100 py-2 text-sm text-slate-600">
+          <div class="border-b border-primary/10 py-2 text-sm text-foreground/70">
             {{ category.name }}
           </div>
         } @empty {
-          <p class="text-sm text-slate-400">No categories yet.</p>
+          <p class="text-sm text-foreground/50">No categories yet.</p>
         }
       </div>
     </div>
 
-    <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 class="text-lg font-semibold text-slate-900">Create warehouse</h2>
+    <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
+      <h2 class="text-lg font-semibold text-foreground">Create warehouse</h2>
 
-      <form [formGroup]="warehouseForm" (ngSubmit)="createWarehouse()"
-            class="mt-4 space-y-3">
+      <form [formGroup]="warehouseForm" (ngSubmit)="createWarehouse()" class="mt-4 space-y-3">
+        <input
+          formControlName="code"
+          placeholder="WH-001"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none placeholder:text-foreground/40"
+        />
 
-        <input formControlName="code" placeholder="WH-001"
-               class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
+        <input
+          formControlName="name"
+          placeholder="Warehouse name"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none placeholder:text-foreground/40"
+        />
 
-        <input formControlName="name" placeholder="Warehouse name"
-               class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
+        <input
+          formControlName="location"
+          placeholder="Location"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none placeholder:text-foreground/40"
+        />
 
-        <input formControlName="location" placeholder="Location"
-               class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
-
-        <button type="submit"
-                class="rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white">
+        <button
+          type="submit"
+          class="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
+        >
           Create warehouse
         </button>
       </form>
 
-      <div class="mt-5 border-t border-slate-100 pt-4">
-        <h3 class="mb-3 text-sm font-semibold text-slate-700">Warehouses</h3>
+      <div class="mt-5 border-t border-primary/10 pt-4">
+        <h3 class="mb-3 text-sm font-semibold text-foreground/80">Warehouses</h3>
         @for (warehouse of warehouses; track warehouse.id) {
-          <div class="border-b border-slate-100 py-2">
-            <p class="text-sm font-medium text-slate-800">
+          <div class="border-b border-primary/10 py-2">
+            <p class="text-sm font-medium text-foreground">
               {{ warehouse.code }} — {{ warehouse.name }}
             </p>
-            <p class="text-xs text-slate-500">{{ warehouse.location }}</p>
+            <p class="text-xs text-foreground/60">{{ warehouse.location }}</p>
           </div>
         } @empty {
-          <p class="text-sm text-slate-400">No warehouses yet.</p>
+          <p class="text-sm text-foreground/50">No warehouses yet.</p>
         }
       </div>
     </div>
-
   </section>
 
   <!-- Stock adjustment and transfer -->
   <section class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+    <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
+      <h2 class="text-lg font-semibold text-foreground">Stock adjustment</h2>
+      <p class="mt-1 text-sm text-foreground/70">Receive stock or issue stock from a warehouse.</p>
 
-    <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 class="text-lg font-semibold text-slate-900">Stock adjustment</h2>
-      <p class="mt-1 text-sm text-slate-500">
-        Receive stock or issue stock from a warehouse.
-      </p>
-
-      <form [formGroup]="adjustmentForm" (ngSubmit)="adjustStock()"
-            class="mt-5 space-y-4">
-
+      <form [formGroup]="adjustmentForm" (ngSubmit)="adjustStock()" class="mt-5 space-y-4">
         <div>
-          <label class="mb-1 block text-sm font-medium text-slate-700">Product</label>
-          <select formControlName="product"
-                  class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm">
-            <option [ngValue]="0">Select product</option>
+          <label class="mb-1 block text-sm font-medium text-foreground/80">Product</label>
+          <select
+            formControlName="product"
+            class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
+          >
+            <option [ngValue]="0" class="bg-surface text-foreground">Select product</option>
             @for (product of products; track product.id) {
-              <option [ngValue]="product.id">
+              <option [ngValue]="product.id" class="bg-surface text-foreground">
                 {{ product.sku }} — {{ product.name }}
               </option>
             }
@@ -315,253 +340,81 @@
         </div>
 
         <div>
-          <label class="mb-1 block text-sm font-medium text-slate-700">Warehouse</label>
-          <select formControlName="warehouse"
-                  class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm">
-            <option [ngValue]="0">Select warehouse</option>
+          <label class="mb-1 block text-sm font-medium text-foreground/80">Warehouse</label>
+          <select
+            formControlName="warehouse"
+            class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
+          >
+            <option [ngValue]="0" class="bg-surface text-foreground">Select warehouse</option>
             @for (warehouse of warehouses; track warehouse.id) {
-              <option [ngValue]="warehouse.id">{{ warehouse.name }}</option>
+              <option [ngValue]="warehouse.id" class="bg-surface text-foreground">
+                {{ warehouse.name }}
+              </option>
             }
           </select>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="mb-1 block text-sm font-medium text-slate-700">Direction</label>
-            <select formControlName="direction"
-                    class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm">
-              <option value="IN">Receive</option>
-              <option value="OUT">Issue</option>
+            <label class="mb-1 block text-sm font-medium text-foreground/80">Direction</label>
+            <select
+              formControlName="direction"
+              class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
+            >
+              <option value="IN" class="bg-surface text-foreground">Receive</option>
+              <option value="OUT" class="bg-surface text-foreground">Issue</option>
             </select>
           </div>
 
           <div>
-            <label class="mb-1 block text-sm font-medium text-slate-700">Quantity</label>
-            <input type="number" min="1" formControlName="quantity"
-                   class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
+            <label class="mb-1 block text-sm font-medium text-foreground/80">Quantity</label>
+            <input
+              type="number"
+              min="1"
+              formControlName="quantity"
+              class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
+            />
           </div>
         </div>
 
-        <input formControlName="reference" placeholder="Reference (optional)"
-               class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
+        <input
+          formControlName="reference"
+          placeholder="Reference (optional)"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none placeholder:text-foreground/40"
+        />
 
-        <textarea formControlName="notes" rows="2" placeholder="Reason for adjustment"
-                  class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
+        <textarea
+          formControlName="notes"
+          rows="2"
+          placeholder="Reason for adjustment"
+          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none placeholder:text-foreground/40"
+        >
         </textarea>
 
-        <button type="submit"
-                class="w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white">
+        <button
+          type="submit"
+          class="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
+        >
           Submit adjustment
         </button>
       </form>
     </div>
 
-    <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 class="text-lg font-semibold text-slate-900">Warehouse transfer</h2>
-      <p class="mt-1 text-sm text-slate-500">
-        Transfer products between warehouses.
-      </p>
+    <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
+      <h2 class="text-lg font-semibold text-foreground">Warehouse transfer</h2>
+      <p class="mt-1 text-sm text-foreground/70">Transfer products between warehouses.</p>
 
-      <form [formGroup]="transferForm" (ngSubmit)="transferStock()"
-            class="mt-5 space-y-4">
-
+      <form [formGroup]="transferForm" (ngSubmit)="transferStock()" class="mt-5 space-y-4">
         <div>
-          <label class="mb-1 block text-sm font-medium text-slate-700">Product</label>
-          <select formControlName="product"
-                  class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm">
-            <option [ngValue]="0">Select product</option>
-            @for (product of products; track product.id) {
-              <option [ngValue]="product.id">
-                {{ product.sku }} — {{ product.name }}
-              </option>
-            }
+          <label class="mb-1 block text-sm font-medium text-foreground/80">Product</label>
+          <select
+            formControlName="product"
+            class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
+          >
+            <option [ngValue]="0" class="bg-surface text-foreground">Select product</option>
           </select>
         </div>
-
-        <div>
-          <label class="mb-1 block text-sm font-medium text-slate-700">Source warehouse</label>
-          <select formControlName="source_warehouse"
-                  class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm">
-            <option [ngValue]="0">Select source</option>
-            @for (warehouse of warehouses; track warehouse.id) {
-              <option [ngValue]="warehouse.id">{{ warehouse.name }}</option>
-            }
-          </select>
-        </div>
-
-        <div>
-          <label class="mb-1 block text-sm font-medium text-slate-700">Destination warehouse</label>
-          <select formControlName="destination_warehouse"
-                  class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm">
-            <option [ngValue]="0">Select destination</option>
-            @for (warehouse of warehouses; track warehouse.id) {
-              <option [ngValue]="warehouse.id">{{ warehouse.name }}</option>
-            }
-          </select>
-        </div>
-
-        <div>
-          <label class="mb-1 block text-sm font-medium text-slate-700">Quantity</label>
-          <input type="number" min="1" formControlName="quantity"
-                 class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
-        </div>
-
-        <input formControlName="reference" placeholder="Reference (optional)"
-               class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
-
-        <textarea formControlName="notes" rows="2" placeholder="Transfer reason"
-                  class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm">
-        </textarea>
-
-        <button type="submit"
-                class="w-full rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white">
-          Transfer stock
-        </button>
       </form>
     </div>
-
   </section>
-
-  <!-- Current stock -->
-  <section class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-    <div class="flex flex-col justify-between gap-3 border-b border-slate-200 p-5 sm:flex-row sm:items-center">
-      <div>
-        <h2 class="text-lg font-semibold text-slate-900">Current stock</h2>
-        <p class="mt-1 text-sm text-slate-500">
-          Product quantities across warehouses.
-        </p>
-      </div>
-
-      <button type="button" (click)="toggleLowStock()"
-              class="rounded-lg border px-4 py-2 text-sm font-medium"
-              [ngClass]="showLowStockOnly
-                ? 'border-amber-300 bg-amber-50 text-amber-800'
-                : 'border-slate-300 bg-white text-slate-700'">
-        {{ showLowStockOnly ? 'Show all stock' : 'Show low stock only' }}
-      </button>
-    </div>
-
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-slate-200 text-sm">
-        <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
-          <tr>
-            <th class="px-5 py-3">SKU</th>
-            <th class="px-5 py-3">Product</th>
-            <th class="px-5 py-3">Warehouse</th>
-            <th class="px-5 py-3 text-right">Quantity</th>
-            <th class="px-5 py-3 text-right">Reorder level</th>
-            <th class="px-5 py-3">Stock status</th>
-          </tr>
-        </thead>
-
-        <tbody class="divide-y divide-slate-100">
-          @for (stock of stockLevels; track stock.id) {
-            <tr class="hover:bg-slate-50">
-              <td class="px-5 py-4 font-medium text-slate-700">
-                {{ stock.product_sku }}
-              </td>
-              <td class="px-5 py-4 font-medium text-slate-900">
-                {{ stock.product_name }}
-              </td>
-              <td class="px-5 py-4 text-slate-600">
-                {{ stock.warehouse_name }}
-              </td>
-              <td class="px-5 py-4 text-right font-semibold text-slate-900">
-                {{ stock.quantity }}
-              </td>
-              <td class="px-5 py-4 text-right text-slate-600">
-                {{ stock.reorder_level }}
-              </td>
-              <td class="px-5 py-4">
-                @if (stock.is_low_stock) {
-                  <span class="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-800">
-                    Low stock
-                  </span>
-                } @else {
-                  <span class="rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-700">
-                    Healthy
-                  </span>
-                }
-              </td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="6" class="px-5 py-10 text-center text-slate-500">
-                No stock records found.
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Movement history -->
-  <section class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-    <div class="border-b border-slate-200 p-5">
-      <h2 class="text-lg font-semibold text-slate-900">Stock movement history</h2>
-      <p class="mt-1 text-sm text-slate-500">
-        Receipts, issues and warehouse transfers.
-      </p>
-    </div>
-
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-slate-200 text-sm">
-        <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
-          <tr>
-            <th class="px-5 py-3">Date</th>
-            <th class="px-5 py-3">Product</th>
-            <th class="px-5 py-3">Warehouse</th>
-            <th class="px-5 py-3">Movement</th>
-            <th class="px-5 py-3 text-right">Quantity</th>
-            <th class="px-5 py-3">Reference</th>
-            <th class="px-5 py-3">User</th>
-          </tr>
-        </thead>
-
-        <tbody class="divide-y divide-slate-100">
-          @for (movement of movements; track movement.id) {
-            <tr class="hover:bg-slate-50">
-              <td class="whitespace-nowrap px-5 py-4 text-slate-500">
-                {{ movement.created_at | date:'medium' }}
-              </td>
-              <td class="px-5 py-4 font-medium text-slate-900">
-                {{ movement.product_sku }}
-              </td>
-              <td class="px-5 py-4 text-slate-600">
-                {{ movement.warehouse_name }}
-              </td>
-              <td class="px-5 py-4">
-                <span class="rounded-full bg-indigo-50 px-2.5 py-1 text-xs font-medium text-indigo-700">
-                  {{ movement.movement_type }}
-                </span>
-              </td>
-              <td class="px-5 py-4 text-right font-semibold text-slate-900">
-                {{ movement.quantity }}
-              </td>
-              <td class="px-5 py-4 text-slate-600">
-                {{ movement.reference || '—' }}
-              </td>
-              <td class="px-5 py-4 text-slate-600">
-                {{ movement.created_by_email }}
-              </td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="7" class="px-5 py-10 text-center text-slate-500">
-                No stock movements yet.
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  @if (loading) {
-    <div class="py-4 text-center text-sm text-slate-500">
-      Loading inventory...
-    </div>
-  }
-
 </div>

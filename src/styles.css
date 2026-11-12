@@ -1,12 +1,38 @@
 @import 'tailwindcss';
 
-:root {
-  color-scheme: light;
-  --background: #ffffff;
-  --foreground: #0f172a;
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
 }
 
-* {
+:root {
+  color-scheme: light;
+
+  --primary: #6366f1; /* Indigo */
+  --primary-hover: #4f46e5;
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --surface: #f8fafc;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --primary: #818cf8;
+  --primary-hover: #6366f1;
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --surface: #1e293b;
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -21,6 +47,9 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 button,
@@ -28,9 +57,4 @@ input,
 textarea,
 select {
   font: inherit;
-}
-
-::selection {
-  background: #dbeafe;
-  color: #1e3a8a;
 }
