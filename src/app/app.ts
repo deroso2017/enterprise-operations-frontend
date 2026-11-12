@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NgxSonnerToaster } from 'ngx-sonner';
 import { AuthService } from './core/services/auth.service';
+import { ThemeService } from './core/services/theme.service';
 import { Navbar } from './shared/navbar/navbar';
 
 @Component({
@@ -11,6 +12,11 @@ import { Navbar } from './shared/navbar/navbar';
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App {
+export class App implements OnInit {
   protected readonly auth = inject(AuthService);
+  private readonly theme = inject(ThemeService);
+
+  ngOnInit() {
+    this.theme.init();
+  }
 }

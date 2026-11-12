@@ -1,4 +1,4 @@
-<nav class="sticky top-0 z-50 border-b border-slate-200 bg-white shadow-sm">
+<nav class="sticky top-0 z-50 border-b border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between">
 
@@ -10,15 +10,15 @@
               d="M3.75 3h16.5M3.75 9h16.5M3.75 15h16.5M3.75 21h16.5" />
           </svg>
         </div>
-        <span class="text-sm font-bold tracking-tight text-slate-900">EnterpriseOps</span>
+        <span class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">EnterpriseOps</span>
       </a>
 
       <!-- Desktop nav links -->
       <div class="hidden items-center gap-1 md:flex">
         @for (link of navLinks; track link.path) {
-          <a [routerLink]="link.path" routerLinkActive="bg-indigo-50 text-indigo-600"
+          <a [routerLink]="link.path" routerLinkActive="bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400"
              [routerLinkActiveOptions]="{ exact: false }"
-             class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900">
+             class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white">
             {{ link.label }}
           </a>
         }
@@ -26,66 +26,103 @@
 
       <!-- Desktop right side -->
       <div class="hidden items-center gap-3 md:flex">
+
+        <!-- Theme toggle -->
+        <button (click)="theme.toggle()"
+                class="rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 cursor-pointer"
+                [attr.aria-label]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'">
+          @if (theme.isDark()) {
+            <!-- Sun icon -->
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+            </svg>
+          } @else {
+            <!-- Moon icon -->
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+            </svg>
+          }
+        </button>
+
         @if (auth.currentUser(); as user) {
           <div class="flex items-center gap-2.5">
-            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-xs font-semibold text-indigo-700">
+            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-xs font-semibold text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300">
               {{ user.first_name[0] }}{{ user.last_name[0] }}
             </div>
             <div class="text-right">
-              <p class="text-xs font-semibold text-slate-900 leading-none">{{ user.first_name }} {{ user.last_name }}</p>
-              <p class="mt-0.5 text-xs text-slate-400 leading-none">{{ user.role }}</p>
+              <p class="mt-0.5 text-xs leading-none text-slate-400 dark:text-slate-500">{{ user.role }}</p>
             </div>
           </div>
           <button (click)="logout()"
-                  class="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600">
+                  class="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600 dark:border-slate-700 dark:text-slate-400 dark:hover:border-red-800 dark:hover:bg-red-950 dark:hover:text-red-400 cursor-pointer">
             Sign out
           </button>
         }
       </div>
 
-      <!-- Mobile menu button -->
-      <button (click)="mobileOpen.set(!mobileOpen())"
-              class="rounded-lg p-2 text-slate-500 hover:bg-slate-100 md:hidden">
-        @if (mobileOpen()) {
-          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        } @else {
-          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
-          </svg>
-        }
-      </button>
+      <!-- Mobile: theme toggle + hamburger -->
+      <div class="flex items-center gap-1 md:hidden">
+        <button (click)="theme.toggle()"
+                class="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 cursor-pointer">
+          @if (theme.isDark()) {
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+            </svg>
+          } @else {
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+            </svg>
+          }
+        </button>
+
+        <button (click)="mobileOpen.set(!mobileOpen())"
+                class="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 cursor-pointer">
+          @if (mobileOpen()) {
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          } @else {
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+            </svg>
+          }
+        </button>
+      </div>
+
     </div>
   </div>
 
   <!-- Mobile menu -->
   @if (mobileOpen()) {
-    <div class="border-t border-slate-100 bg-white px-4 pb-4 pt-2 md:hidden">
+    <div class="border-t border-slate-100 bg-white px-4 pb-4 pt-2 dark:border-slate-700 dark:bg-slate-900 md:hidden">
       <div class="space-y-1">
         @for (link of navLinks; track link.path) {
-          <a [routerLink]="link.path" routerLinkActive="bg-indigo-50 text-indigo-600"
+          <a [routerLink]="link.path" routerLinkActive="bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400"
              [routerLinkActiveOptions]="{ exact: false }"
              (click)="mobileOpen.set(false)"
-             class="block rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100">
+             class="block rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white">
             {{ link.label }}
           </a>
         }
       </div>
 
       @if (auth.currentUser(); as user) {
-        <div class="mt-4 border-t border-slate-100 pt-4">
+        <div class="mt-4 border-t border-slate-100 pt-4 dark:border-slate-700">
           <div class="mb-3 flex items-center gap-2.5 px-1">
-            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-xs font-semibold text-indigo-700">
+            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-xs font-semibold text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300">
               {{ user.first_name[0] }}{{ user.last_name[0] }}
             </div>
             <div>
-              <p class="text-sm font-semibold text-slate-900">{{ user.first_name }} {{ user.last_name }}</p>
-              <p class="text-xs text-slate-400">{{ user.email }}</p>
+              <p class="text-sm font-semibold text-slate-900 dark:text-white">{{ user.first_name }} {{ user.last_name }}</p>
+              <p class="text-xs text-slate-400 dark:text-slate-500">{{ user.email }}</p>
             </div>
           </div>
           <button (click)="logout()"
-                  class="w-full rounded-lg border border-slate-200 py-2 text-sm font-semibold text-red-600 hover:bg-red-50">
+                  class="w-full rounded-lg border border-slate-200 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 dark:border-slate-700 dark:text-red-400 dark:hover:bg-red-950 cursor-pointer">
             Sign out
           </button>
         </div>

@@ -1,46 +1,37 @@
-
-<section class="max-w-[1180px] mx-auto space-y-8 px-4 py-8 sm:px-6 lg:px-8"> 
+<section class="max-w-[1180px] mx-auto space-y-8 px-4 py-8 sm:px-6 lg:px-8">
   <header class="flex flex-col items-start md:flex-row md:items-center justify-between gap-5 mb-7">
     <div>
-      <p class="text-[#5265d9] text-xs font-bold tracking-[0.12em]">ENTERPRISE OPERATIONS</p>
-      <h1 class="text-[30px] font-bold my-2.5 text-[#182230]">Operations Dashboard</h1>
-      <p class="text-[#667085] leading-relaxed">Your workspace is ready.</p>
+      <p class="text-primary text-xs font-bold tracking-[0.12em]">ENTERPRISE OPERATIONS</p>
+      <h1 class="text-[30px] font-bold my-2.5 text-foreground">Operations Dashboard</h1>
+      <p class="text-foreground/70 leading-relaxed">Your workspace is ready.</p>
     </div>
-
-    <button 
-      type="button" 
-      (click)="logout()"
-      class="py-3 px-[18px] border-0 rounded-lg bg-[#4054cf] text-white font-semibold cursor-pointer hover:bg-[#3444ab] transition-colors"
-    >
-      Sign out
-    </button>
   </header>
 
   @if (auth.currentUser(); as user) {
-    <section class="bg-white border border-[#e3e8f1] rounded-[14px] p-7 shadow-sm mb-6">
-      <h2 class="text-xl font-bold mb-3 text-[#182230]">Your profile</h2>
-      <p class="text-[#182230] mb-1.5"><strong class="font-semibold">Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-      <p class="text-[#182230] mb-1.5"><strong class="font-semibold">Email:</strong> {{ user.email }}</p>
-      <p class="text-[#182230]"><strong class="font-semibold">Role:</strong> {{ user.role }}</p>
+    <section class="bg-surface border border-primary/20 rounded-[14px] p-7 shadow-sm mb-6">
+      <h2 class="text-xl font-bold mb-3 text-foreground">Your profile</h2>
+      <p class="text-foreground/80 mb-1.5"><strong class="font-semibold">Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+      <p class="text-foreground/80 mb-1.5"><strong class="font-semibold">Email:</strong> {{ user.email }}</p>
+      <p class="text-foreground/80"><strong class="font-semibold">Role:</strong> {{ user.role }}</p>
     </section>
 
     <section class="grid grid-cols-1 md:grid-cols-3 gap-5">
-      <article class="bg-white border border-[#e3e8f1] rounded-[14px] p-7 shadow-sm">
-        <h2 class="text-xl font-bold mb-2 text-[#182230]">Inventory</h2>
-        <p class="text-[#667085] mb-4">Products, warehouses and stock movements.</p>
-        <span class="text-[#667085] text-[13px]">Coming in Milestone 3</span>
+      <article class="bg-surface border border-primary/20 rounded-[14px] p-7 shadow-sm">
+        <h2 class="text-xl font-bold mb-2 text-foreground">Inventory</h2>
+        <p class="text-foreground/70 mb-4">Products, warehouses and stock movements.</p>
+        <span class="text-foreground/50 text-[13px]">Coming in Milestone 3</span>
       </article>
 
-      <article class="bg-white border border-[#e3e8f1] rounded-[14px] p-7 shadow-sm">
-        <h2 class="text-xl font-bold mb-2 text-[#182230]">Orders</h2>
-        <p class="text-[#667085] mb-4">Order processing and fulfillment.</p>
-        <span class="text-[#667085] text-[13px]">Coming in Milestone 4</span>
+      <article class="bg-surface border border-primary/20 rounded-[14px] p-7 shadow-sm">
+        <h2 class="text-xl font-bold mb-2 text-foreground">Orders</h2>
+        <p class="text-foreground/70 mb-4">Order processing and fulfillment.</p>
+        <span class="text-foreground/50 text-[13px]">Coming in Milestone 4</span>
       </article>
 
-      <article class="bg-white border border-[#e3e8f1] rounded-[14px] p-7 shadow-sm">
-        <h2 class="text-xl font-bold mb-2 text-[#182230]">Customer Support</h2>
-        <p class="text-[#667085] mb-4">Tickets, assignment and service levels.</p>
-        <span class="text-[#667085] text-[13px]">Coming in Milestone 5</span>
+      <article class="bg-surface border border-primary/20 rounded-[14px] p-7 shadow-sm">
+        <h2 class="text-xl font-bold mb-2 text-foreground">Customer Support</h2>
+        <p class="text-foreground/70 mb-4">Tickets, assignment and service levels.</p>
+        <span class="text-foreground/50 text-[13px]">Coming in Milestone 5</span>
       </article>
     </section>
   }

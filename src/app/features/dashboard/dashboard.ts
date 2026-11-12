@@ -11,10 +11,4 @@ import { AuthService } from '../../core/services/auth.service';
 export class Dashboard {
   readonly auth = inject(AuthService);
   private readonly router = inject(Router);
-
-  logout(): void {
-    this.auth.logout().subscribe(() => {
-      void this.router.navigate(['/login']);
-    });
-  }
 }
