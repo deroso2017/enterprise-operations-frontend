@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { finalize } from 'rxjs';
+import { catchError, finalize, forkJoin, of } from 'rxjs';
 import { toast } from 'ngx-sonner';
 
 import { InventoryService } from '../../../../core/services/inventory.service';
@@ -14,6 +14,7 @@ import {
   StockMovement,
   Warehouse,
 } from '../../models/inventory.models';
+import { cn } from '../../../../shared/utils/cn';
 
 @Component({
   selector: 'app-inventory-page',
@@ -24,6 +25,8 @@ import {
 export class InventoryPageComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly inventoryService = inject(InventoryService);
+
+  protected readonly cn = cn;
 
   summary: InventorySummary | null = null;
 
@@ -96,75 +99,37 @@ export class InventoryPageComponent implements OnInit {
   }
 
   private loadReferenceData(): void {
-    let completed = 0;
-    let failed = false;
+    this.loading = true;
 
-    const finish = (): void => {
-      completed += 1;
+    forkJoin({
+      categories: this.inventoryService.getCategories().pipe(catchError(() => of({ results: [] }))),
+      warehouses: this.inventoryService.getWarehouses().pipe(catchError(() => of({ results: [] }))),
+      products: this.inventoryService
+        .getProducts(this.searchTerm)
+        .pipe(catchError(() => of({ results: [] }))),
+      stockLevels: this.inventoryService
+        .getStockLevels(this.showLowStockOnly)
+        .pipe(catchError(() => of({ results: [] }))),
+      movements: this.inventoryService.getMovements().pipe(catchError(() => of({ results: [] }))),
+    }).subscribe({
+      next: (res) => {
+        this.categories = res.categories.results;
+        this.warehouses = res.warehouses.results;
+        this.products = res.products.results;
+        this.stockLevels = res.stockLevels.results;
+        this.movements = res.movements.results;
 
-      if (completed === 5) {
         this.loading = false;
 
-        if (!failed) {
-          this.productForm.controls.category.setValue(this.categories[0]?.id ?? 0);
-        } else {
-          toast.warning('Some reference data failed to load.');
+        if (this.categories.length > 0) {
+          this.productForm.controls.category.setValue(this.categories[0].id);
         }
-      }
-    };
-
-    this.inventoryService.getCategories().subscribe({
-      next: (response) => {
-        this.categories = response.results;
-        finish();
+        toast.success('Inventory data loaded successfully.');
       },
-      error: () => {
-        failed = true;
-        finish();
-      },
-    });
-
-    this.inventoryService.getWarehouses().subscribe({
-      next: (response) => {
-        this.warehouses = response.results;
-        finish();
-      },
-      error: () => {
-        failed = true;
-        finish();
-      },
-    });
-
-    this.inventoryService.getProducts(this.searchTerm).subscribe({
-      next: (response) => {
-        this.products = response.results;
-        finish();
-      },
-      error: () => {
-        failed = true;
-        finish();
-      },
-    });
-
-    this.inventoryService.getStockLevels(this.showLowStockOnly).subscribe({
-      next: (response) => {
-        this.stockLevels = response.results;
-        finish();
-      },
-      error: () => {
-        failed = true;
-        finish();
-      },
-    });
-
-    this.inventoryService.getMovements().subscribe({
-      next: (response) => {
-        this.movements = response.results;
-        finish();
-      },
-      error: () => {
-        failed = true;
-        finish();
+      error: (err) => {
+        this.loading = false;
+        console.error('Critical dashboard load failure:', err);
+        toast.error('Could not load inventory data.');
       },
     });
   }

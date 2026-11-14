@@ -1,9 +1,22 @@
-<div class="mx-auto max-w-7xl space-y-8 px-4 py-8 sm:px-6 lg:px-8">
+
+<div [class]="cn(
+  'mx-auto max-w-7xl',
+  'space-y-8 px-4 py-8 sm:px-6 lg:px-8'
+)">
   <!-- Page header -->
-  <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+  <div [class]="cn(
+    'flex flex-col justify-between gap-4',
+    'sm:flex-row sm:items-center'
+  )">
     <div>
-      <p class="text-sm font-medium text-primary">Operations / Inventory</p>
-      <h1 class="mt-2 text-3xl font-bold tracking-tight text-foreground">Inventory Management</h1>
+      <p class="text-sm font-medium text-primary">
+        Operations / Inventory
+      </p>
+
+      <h1 class="mt-2 text-3xl font-bold tracking-tight text-foreground">
+        Inventory Management
+      </h1>
+
       <p class="mt-2 text-sm text-foreground/70">
         Manage products, warehouses and stock movements.
       </p>
@@ -12,7 +25,11 @@
     <button
       type="button"
       (click)="loadDashboard()"
-      class="rounded-lg border border-primary/30 bg-surface px-4 py-2.5 text-sm font-semibold text-foreground shadow-sm hover:bg-primary/10 transition-colors"
+      [class]="cn(
+        'rounded-lg border border-primary/30 bg-surface',
+        'px-4 py-2.5 text-sm font-semibold text-foreground shadow-sm',
+        'transition-colors hover:bg-primary/10 cursor-pointer'
+      )"
     >
       Refresh data
     </button>
@@ -20,36 +37,61 @@
 
   <!-- Dashboard cards -->
   @if (summary; as data) {
-    <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <section [class]="cn(
+      'grid grid-cols-1 gap-4',
+      'sm:grid-cols-2 xl:grid-cols-4'
+    )">
       <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
-        <p class="text-sm font-medium text-foreground/70">Active products</p>
+        <p class="text-sm font-medium text-foreground/70">
+          Active products
+        </p>
+
         <p class="mt-3 text-3xl font-bold text-foreground">
           {{ data.total_products }}
         </p>
-        <p class="mt-2 text-xs text-foreground/50">Products in catalog</p>
+
+        <p class="mt-2 text-xs text-foreground/50">
+          Products in catalog
+        </p>
       </div>
 
       <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
-        <p class="text-sm font-medium text-foreground/70">Warehouses</p>
+        <p class="text-sm font-medium text-foreground/70">
+          Warehouses
+        </p>
+
         <p class="mt-3 text-3xl font-bold text-foreground">
           {{ data.total_warehouses }}
         </p>
-        <p class="mt-2 text-xs text-foreground/50">Active storage locations</p>
+
+        <p class="mt-2 text-xs text-foreground/50">
+          Active storage locations
+        </p>
       </div>
 
       <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
-        <p class="text-sm font-medium text-foreground/70">Total units</p>
+        <p class="text-sm font-medium text-foreground/70">
+          Total units
+        </p>
+
         <p class="mt-3 text-3xl font-bold text-foreground">
           {{ data.total_units }}
         </p>
-        <p class="mt-2 text-xs text-foreground/50">Across active warehouses</p>
+
+        <p class="mt-2 text-xs text-foreground/50">
+          Across active warehouses
+        </p>
       </div>
 
       <div class="rounded-xl border border-amber-500/40 bg-amber-500/10 p-5 shadow-sm">
-        <p class="text-sm font-medium text-amber-600 dark:text-amber-400">Low-stock items</p>
+        <p class="text-sm font-medium text-amber-600 dark:text-amber-400">
+          Low-stock items
+        </p>
+
         <p class="mt-3 text-3xl font-bold text-amber-700 dark:text-amber-300">
           {{ data.low_stock_items }}
         </p>
+
         <p class="mt-2 text-xs text-amber-600/80 dark:text-amber-400/80">
           At or below reorder level
         </p>
@@ -59,12 +101,19 @@
 
   <!-- Product catalog -->
   <section class="overflow-hidden rounded-xl border border-primary/20 bg-surface shadow-sm">
-    <div
-      class="flex flex-col justify-between gap-4 border-b border-primary/10 p-5 sm:flex-row sm:items-center"
-    >
+    <div [class]="cn(
+      'flex flex-col justify-between gap-4',
+      'border-b border-primary/10 p-5',
+      'sm:flex-row sm:items-center'
+    )">
       <div>
-        <h2 class="text-lg font-semibold text-foreground">Product catalog</h2>
-        <p class="mt-1 text-sm text-foreground/70">Search and manage inventory products.</p>
+        <h2 class="text-lg font-semibold text-foreground">
+          Product catalog
+        </h2>
+
+        <p class="mt-1 text-sm text-foreground/70">
+          Search and manage inventory products.
+        </p>
       </div>
 
       <div class="flex gap-2">
@@ -74,13 +123,22 @@
           (input)="searchTerm = $any($event.target).value"
           (keyup.enter)="searchProducts()"
           placeholder="Search name or SKU"
-          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 sm:w-64 placeholder:text-foreground/40"
+          [class]="cn(
+            'w-full rounded-lg border border-primary/30 bg-background',
+            'px-3 py-2 text-sm text-foreground outline-none',
+            'focus:border-primary focus:ring-2 focus:ring-primary/20',
+            'placeholder:text-foreground/40 sm:w-64'
+          )"
         />
 
         <button
           type="button"
           (click)="searchProducts()"
-          class="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
+          [class]="cn(
+            'rounded-lg bg-primary px-4 py-2',
+            'text-sm font-semibold text-white',
+            'transition-colors hover:bg-primary-hover'
+          )"
         >
           Search
         </button>
@@ -102,34 +160,40 @@
 
         <tbody class="divide-y divide-primary/10">
           @for (product of products; track product.id) {
-            <tr class="hover:bg-primary/5 transition-colors">
+            <tr class="transition-colors hover:bg-primary/5">
               <td class="whitespace-nowrap px-5 py-4 font-medium text-foreground/80">
                 {{ product.sku }}
               </td>
+
               <td class="px-5 py-4">
-                <p class="font-semibold text-foreground">{{ product.name }}</p>
+                <p class="font-semibold text-foreground">
+                  {{ product.name }}
+                </p>
+
                 <p class="mt-1 text-xs text-foreground/60">
                   {{ product.description || 'No description' }}
                 </p>
               </td>
+
               <td class="px-5 py-4 text-foreground/70">
                 {{ product.category_name }}
               </td>
+
               <td class="whitespace-nowrap px-5 py-4 text-right text-foreground/80">
                 {{ product.unit_price | currency: 'EUR' }}
               </td>
+
               <td class="px-5 py-4 text-right text-foreground/80">
                 {{ product.reorder_level }}
               </td>
+
               <td class="px-5 py-4">
-                <span
-                  class="rounded-full px-2.5 py-1 text-xs font-medium"
-                  [ngClass]="
-                    product.is_active
-                      ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-                      : 'bg-foreground/10 text-foreground/60'
-                  "
-                >
+                <span [class]="cn(
+                  'rounded-full px-2.5 py-1 text-xs font-medium',
+                  product.is_active
+                    ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                    : 'bg-foreground/10 text-foreground/60'
+                )">
                   {{ product.is_active ? 'Active' : 'Inactive' }}
                 </span>
               </td>
@@ -148,39 +212,69 @@
 
   <!-- Product creation -->
   <section class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
-    <h2 class="text-lg font-semibold text-foreground">Create product</h2>
-    <p class="mt-1 text-sm text-foreground/70">Add a new product to the catalog.</p>
+    <h2 class="text-lg font-semibold text-foreground">
+      Create product
+    </h2>
+
+    <p class="mt-1 text-sm text-foreground/70">
+      Add a new product to the catalog.
+    </p>
 
     <form
       [formGroup]="productForm"
       (ngSubmit)="createProduct()"
-      class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+      [class]="cn(
+        'mt-5 grid grid-cols-1 gap-4',
+        'sm:grid-cols-2 lg:grid-cols-3'
+      )"
     >
       <div>
-        <label class="mb-1 block text-sm font-medium text-foreground/80">SKU</label>
+        <label class="mb-1 block text-sm font-medium text-foreground/80">
+          SKU
+        </label>
+
         <input
           formControlName="sku"
           placeholder="LAP-001"
-          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 placeholder:text-foreground/40"
+          [class]="cn(
+            'w-full rounded-lg border border-primary/30 bg-background',
+            'px-3 py-2.5 text-sm text-foreground',
+            'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20',
+            'placeholder:text-foreground/40'
+          )"
         />
       </div>
 
       <div>
-        <label class="mb-1 block text-sm font-medium text-foreground/80">Product name</label>
+        <label class="mb-1 block text-sm font-medium text-foreground/80">
+          Product name
+        </label>
+
         <input
           formControlName="name"
           placeholder="Business Laptop"
-          class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 placeholder:text-foreground/40"
+          [class]="cn(
+            'w-full rounded-lg border border-primary/30 bg-background',
+            'px-3 py-2.5 text-sm text-foreground',
+            'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20',
+            'placeholder:text-foreground/40'
+          )"
         />
       </div>
 
       <div>
-        <label class="mb-1 block text-sm font-medium text-foreground/80">Category</label>
+        <label class="mb-1 block text-sm font-medium text-foreground/80">
+          Category
+        </label>
+
         <select
           formControlName="category"
           class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
         >
-          <option [ngValue]="0" class="bg-surface text-foreground">Select category</option>
+          <option [ngValue]="0" class="bg-surface text-foreground">
+            Select category
+          </option>
+
           @for (category of categories; track category.id) {
             <option [ngValue]="category.id" class="bg-surface text-foreground">
               {{ category.name }}
@@ -190,7 +284,10 @@
       </div>
 
       <div>
-        <label class="mb-1 block text-sm font-medium text-foreground/80">Unit price (€)</label>
+        <label class="mb-1 block text-sm font-medium text-foreground/80">
+          Unit price (€)
+        </label>
+
         <input
           type="number"
           min="0"
@@ -201,7 +298,10 @@
       </div>
 
       <div>
-        <label class="mb-1 block text-sm font-medium text-foreground/80">Reorder level</label>
+        <label class="mb-1 block text-sm font-medium text-foreground/80">
+          Reorder level
+        </label>
+
         <input
           type="number"
           min="0"
@@ -211,7 +311,10 @@
       </div>
 
       <div>
-        <label class="mb-1 block text-sm font-medium text-foreground/80">Description</label>
+        <label class="mb-1 block text-sm font-medium text-foreground/80">
+          Description
+        </label>
+
         <input
           formControlName="description"
           placeholder="Product description"
@@ -223,7 +326,12 @@
         <button
           type="submit"
           [disabled]="submitting"
-          class="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
+          [class]="cn(
+            'rounded-lg bg-primary px-5 py-2.5',
+            'text-sm font-semibold text-white',
+            'transition-colors hover:bg-primary-hover',
+            'disabled:cursor-not-allowed disabled:opacity-50'
+          )"
         >
           {{ submitting ? 'Saving...' : 'Create product' }}
         </button>
@@ -232,11 +340,21 @@
   </section>
 
   <!-- Category and warehouse management -->
-  <section class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+  <section [class]="cn(
+    'grid grid-cols-1 gap-5',
+    'lg:grid-cols-2'
+  )">
+    <!-- Create category -->
     <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
-      <h2 class="text-lg font-semibold text-foreground">Create category</h2>
+      <h2 class="text-lg font-semibold text-foreground">
+        Create category
+      </h2>
 
-      <form [formGroup]="categoryForm" (ngSubmit)="createCategory()" class="mt-4 space-y-3">
+      <form
+        [formGroup]="categoryForm"
+        (ngSubmit)="createCategory()"
+        class="mt-4 space-y-3"
+      >
         <input
           formControlName="name"
           placeholder="Category name"
@@ -248,33 +366,44 @@
           rows="2"
           placeholder="Description"
           class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none placeholder:text-foreground/40"
-        >
-        </textarea>
+        ></textarea>
 
         <button
           type="submit"
-          class="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
+          class="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
         >
           Create category
         </button>
       </form>
 
       <div class="mt-5 border-t border-primary/10 pt-4">
-        <h3 class="mb-3 text-sm font-semibold text-foreground/80">Categories</h3>
+        <h3 class="mb-3 text-sm font-semibold text-foreground/80">
+          Categories
+        </h3>
+
         @for (category of categories; track category.id) {
           <div class="border-b border-primary/10 py-2 text-sm text-foreground/70">
             {{ category.name }}
           </div>
         } @empty {
-          <p class="text-sm text-foreground/50">No categories yet.</p>
+          <p class="text-sm text-foreground/50">
+            No categories yet.
+          </p>
         }
       </div>
     </div>
 
+    <!-- Create warehouse -->
     <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
-      <h2 class="text-lg font-semibold text-foreground">Create warehouse</h2>
+      <h2 class="text-lg font-semibold text-foreground">
+        Create warehouse
+      </h2>
 
-      <form [formGroup]="warehouseForm" (ngSubmit)="createWarehouse()" class="mt-4 space-y-3">
+      <form
+        [formGroup]="warehouseForm"
+        (ngSubmit)="createWarehouse()"
+        class="mt-4 space-y-3"
+      >
         <input
           formControlName="code"
           placeholder="WH-001"
@@ -295,42 +424,69 @@
 
         <button
           type="submit"
-          class="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
+          class="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
         >
           Create warehouse
         </button>
       </form>
 
       <div class="mt-5 border-t border-primary/10 pt-4">
-        <h3 class="mb-3 text-sm font-semibold text-foreground/80">Warehouses</h3>
+        <h3 class="mb-3 text-sm font-semibold text-foreground/80">
+          Warehouses
+        </h3>
+
         @for (warehouse of warehouses; track warehouse.id) {
           <div class="border-b border-primary/10 py-2">
             <p class="text-sm font-medium text-foreground">
               {{ warehouse.code }} — {{ warehouse.name }}
             </p>
-            <p class="text-xs text-foreground/60">{{ warehouse.location }}</p>
+
+            <p class="text-xs text-foreground/60">
+              {{ warehouse.location }}
+            </p>
           </div>
         } @empty {
-          <p class="text-sm text-foreground/50">No warehouses yet.</p>
+          <p class="text-sm text-foreground/50">
+            No warehouses yet.
+          </p>
         }
       </div>
     </div>
   </section>
 
   <!-- Stock adjustment and transfer -->
-  <section class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+  <section [class]="cn(
+    'grid grid-cols-1 gap-5',
+    'lg:grid-cols-2'
+  )">
+    <!-- Stock adjustment -->
     <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
-      <h2 class="text-lg font-semibold text-foreground">Stock adjustment</h2>
-      <p class="mt-1 text-sm text-foreground/70">Receive stock or issue stock from a warehouse.</p>
+      <h2 class="text-lg font-semibold text-foreground">
+        Stock adjustment
+      </h2>
 
-      <form [formGroup]="adjustmentForm" (ngSubmit)="adjustStock()" class="mt-5 space-y-4">
+      <p class="mt-1 text-sm text-foreground/70">
+        Receive stock or issue stock from a warehouse.
+      </p>
+
+      <form
+        [formGroup]="adjustmentForm"
+        (ngSubmit)="adjustStock()"
+        class="mt-5 space-y-4"
+      >
         <div>
-          <label class="mb-1 block text-sm font-medium text-foreground/80">Product</label>
+          <label class="mb-1 block text-sm font-medium text-foreground/80">
+            Product
+          </label>
+
           <select
             formControlName="product"
             class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
           >
-            <option [ngValue]="0" class="bg-surface text-foreground">Select product</option>
+            <option [ngValue]="0" class="bg-surface text-foreground">
+              Select product
+            </option>
+
             @for (product of products; track product.id) {
               <option [ngValue]="product.id" class="bg-surface text-foreground">
                 {{ product.sku }} — {{ product.name }}
@@ -340,12 +496,18 @@
         </div>
 
         <div>
-          <label class="mb-1 block text-sm font-medium text-foreground/80">Warehouse</label>
+          <label class="mb-1 block text-sm font-medium text-foreground/80">
+            Warehouse
+          </label>
+
           <select
             formControlName="warehouse"
             class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
           >
-            <option [ngValue]="0" class="bg-surface text-foreground">Select warehouse</option>
+            <option [ngValue]="0" class="bg-surface text-foreground">
+              Select warehouse
+            </option>
+
             @for (warehouse of warehouses; track warehouse.id) {
               <option [ngValue]="warehouse.id" class="bg-surface text-foreground">
                 {{ warehouse.name }}
@@ -356,18 +518,29 @@
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="mb-1 block text-sm font-medium text-foreground/80">Direction</label>
+            <label class="mb-1 block text-sm font-medium text-foreground/80">
+              Direction
+            </label>
+
             <select
               formControlName="direction"
               class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
             >
-              <option value="IN" class="bg-surface text-foreground">Receive</option>
-              <option value="OUT" class="bg-surface text-foreground">Issue</option>
+              <option value="IN" class="bg-surface text-foreground">
+                Receive
+              </option>
+
+              <option value="OUT" class="bg-surface text-foreground">
+                Issue
+              </option>
             </select>
           </div>
 
           <div>
-            <label class="mb-1 block text-sm font-medium text-foreground/80">Quantity</label>
+            <label class="mb-1 block text-sm font-medium text-foreground/80">
+              Quantity
+            </label>
+
             <input
               type="number"
               min="1"
@@ -388,30 +561,44 @@
           rows="2"
           placeholder="Reason for adjustment"
           class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none placeholder:text-foreground/40"
-        >
-        </textarea>
+        ></textarea>
 
         <button
           type="submit"
-          class="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
+          class="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
         >
           Submit adjustment
         </button>
       </form>
     </div>
 
+    <!-- Warehouse transfer -->
     <div class="rounded-xl border border-primary/20 bg-surface p-5 shadow-sm">
-      <h2 class="text-lg font-semibold text-foreground">Warehouse transfer</h2>
-      <p class="mt-1 text-sm text-foreground/70">Transfer products between warehouses.</p>
+      <h2 class="text-lg font-semibold text-foreground">
+        Warehouse transfer
+      </h2>
 
-      <form [formGroup]="transferForm" (ngSubmit)="transferStock()" class="mt-5 space-y-4">
+      <p class="mt-1 text-sm text-foreground/70">
+        Transfer products between warehouses.
+      </p>
+
+      <form
+        [formGroup]="transferForm"
+        (ngSubmit)="transferStock()"
+        class="mt-5 space-y-4"
+      >
         <div>
-          <label class="mb-1 block text-sm font-medium text-foreground/80">Product</label>
+          <label class="mb-1 block text-sm font-medium text-foreground/80">
+            Product
+          </label>
+
           <select
             formControlName="product"
             class="w-full rounded-lg border border-primary/30 bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
           >
-            <option [ngValue]="0" class="bg-surface text-foreground">Select product</option>
+            <option [ngValue]="0" class="bg-surface text-foreground">
+              Select product
+            </option>
           </select>
         </div>
       </form>
